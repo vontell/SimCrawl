@@ -11,16 +11,18 @@ public class Event {
 
     private EventType type;
     private Room room;
-    private Date timeStart;
-    private Date timeEnd;
+    private String timeStart;
+    private String timeEnd;
     private int count;
     private String title;
+    private String host;
     private boolean dormEvent;
 
-    public Event(String title, EventType type, Room room, boolean dormEvent, Date timeStart, Date timeEnd, int count) {
+    public Event(String title, String host, EventType type, Room room, boolean dormEvent, String timeStart, String timeEnd, int count) {
         this.title = title;
         this.type = type;
         this.room = room;
+        this.host = host;
         this.dormEvent = dormEvent;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
@@ -33,6 +35,10 @@ public class Event {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getHost() {
+        return host;
     }
 
     public EventType getType() {
@@ -59,19 +65,19 @@ public class Event {
         this.dormEvent = dormEvent;
     }
 
-    public Date getTimeStart() {
+    public String getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(Date timeStart) {
+    public void setTimeStart(String timeStart) {
         this.timeStart = timeStart;
     }
 
-    public Date getTimeEnd() {
+    public String getTimeEnd() {
         return timeEnd;
     }
 
-    public void setTimeEnd(Date timeEnd) {
+    public void setTimeEnd(String timeEnd) {
         this.timeEnd = timeEnd;
     }
 

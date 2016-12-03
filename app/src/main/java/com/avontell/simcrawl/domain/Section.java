@@ -8,13 +8,9 @@ package com.avontell.simcrawl.domain;
 public class Section {
 
     private String title;
-    private String tower;
-    private int floor;
 
-    public Section(String title, String tower, int floor) {
+    public Section(String title) {
         this.title = title;
-        this.tower = tower;
-        this.floor = floor;
     }
 
     public String getTitle() {
@@ -25,19 +21,10 @@ public class Section {
         this.title = title;
     }
 
-    public String getTower() {
-        return tower;
+    public String toString() {
+
+        return title;
+
     }
 
-    public void setTower(String tower) {
-        this.tower = tower;
-    }
-
-    public int getFloor() {
-        return floor;
-    }
-
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
 }
