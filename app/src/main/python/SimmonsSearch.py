@@ -1,16 +1,17 @@
 
 
 graph = {
-	'Dining':set(('Late Night',48)),
+	'Dining':set([('Late Night',48)]),
 	'Late Night':set([('Dining',48),('Mailbox',48)]),
 	'Mailbox':set([('Entrance',48),('MPR',24)]),
 	'Entrance':set([('Mailbox',48),('MPR',69),('2C',48)]),
+	'MPR':set([('Mailbox',24),('Entrance',69)]),
 
 	'2C':set([('Entrance',48),('2B',148),('3C',48)]),
 	'2B':set([('Essigmans\'',48),('2A',148),('3B',48),('2C',148)]),
 	'Essigmans\'':set([('2B',48)]),
 	'2A':set([('Party Room',62),('2B',148),('3A',48)]),
-	'Party Room':set(('2A',62)),
+	'Party Room':set([('2A',62)]),
 
 	'3A':set([('2A',48),('4A',48),('3B',148)]),
 	'3B':set([('2B',48),('4B',48),('3A',148)]),
