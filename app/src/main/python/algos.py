@@ -1,18 +1,30 @@
 from SimmonsSearch import graph as graph
-
+from mapping import map_room as map_room
 # print graph
 
 def DFS(start,end):
+	start_room = start
+	end_room = end
 	if(start == end):
 		return start
+
+	if start not in graph:
+		start = map_room(start)
+	if end not in graph:
+		end = map_room(end)
+
 	agenda = [[start]]
 	visited = set([])
 	while(len(agenda) > 0):
 		current_path = agenda.pop()
 		if(current_path[-1] == end):
+			current_path.pop(0)
+			current_path.pop(len(current_path)-1)
+			current_path.insert(0,start_room)
+			current_path.append(end_room)
 			return current_path
 		current_node = current_path[-1]
-		print current_node
+		# print current_node
 		
 		visited.add(current_node)
 		neighbors = graph[current_node]
@@ -21,19 +33,35 @@ def DFS(start,end):
 			if node not in visited:
 				agenda.append(current_path + [node])
 
+
+
 # print DFS('5B','6B') <- hilarity
+# print DFS('377','673') <- more hilarity
 
 def BFS(start,end):
+	start_room = start
+	end_room = end
 	if(start == end):
 		return start
+
+	if start not in graph:
+		start = map_room(start)
+	if end not in graph:
+		end = map_room(end)
+	
 	agenda = [[start]]
 	visited = set([])
 	while(len(agenda) > 0):
 		current_path = agenda.pop(0)
 		if(current_path[-1] == end):
+			current_path.pop(0)
+			current_path.pop(len(current_path)-1)
+			current_path.insert(0,start_room)
+			current_path.append(end_room)
 			return current_path
+
 		current_node = current_path[-1]
-		print current_node
+		# print current_node
 		
 		visited.add(current_node)
 		neighbors = graph[current_node]
@@ -43,10 +71,19 @@ def BFS(start,end):
 				agenda.append(current_path + [node])
 
 # print BFS('5B','6B') <- much better
+# print BFS('377','673') <- much better
 
 def Dijkstra(start,end):
+	
+	start_room = start
+	end_room = end
 	if(start == end):
 		return start
+
+	if start not in graph:
+		start = map_room(start)
+	if end not in graph:
+		end = map_room(end)
 
 	prev = {}
 	visited = set([])
@@ -88,6 +125,11 @@ def Dijkstra(start,end):
 		route.insert(0,end)
 		end = prev[end]
 	route.insert(0,start)
+	route.pop(0)
+	route.pop(len(route)-1)
+	route.insert(0,start_room)
+	route.append(end_room)
 	return route
 
 # print Dijkstra("Dining","MPR")
+# print Dijkstra('422C','1022C')
