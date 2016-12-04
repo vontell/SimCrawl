@@ -1,14 +1,13 @@
 from flask import Flask
 from flask import request
 from algos import BFS
+from mapping import init
 import json
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
     return "Hello World!"
-
-@app.route('/api/rooms')
 
 @app.route('/api/search')
 def search():
@@ -21,6 +20,14 @@ def search():
 	# return Response(json.dumps(js),  mimetype='application/json')
 	# return Response(json.dumps(route), mimetype='application/json')
 	return json.dumps(route)
+
+@app.route('/api/rooms')
+def room_dump():
+	room_dict = init()
+	# print room_dict
+	for section in room_dict:
+		room_dict[section] = list(room_dict[section])
+	return json.dumps(room_dict)
 
 if __name__ == "__main__":
     app.run()

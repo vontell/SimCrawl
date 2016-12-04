@@ -35,8 +35,8 @@ def DFS(start,end):
 
 
 
-# print DFS('5B','6B') <- hilarity
-# print DFS('377','673') <- more hilarity
+# print DFS('5B','6B') #<- hilarity
+# print DFS('377','673')# <- more hilarity
 
 def BFS(start,end):
 	start_room = start
@@ -70,8 +70,8 @@ def BFS(start,end):
 			if node not in visited:
 				agenda.append(current_path + [node])
 
-# print BFS('5B','6B') <- much better
-# print BFS('377','673') <- much better
+# print BFS('5B','6B')# <- much better
+# print BFS('377','673')# <- much better
 
 def Dijkstra(start,end):
 	

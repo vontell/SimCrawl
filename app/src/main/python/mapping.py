@@ -116,7 +116,7 @@ def init():
 	'B Tower':b_tower_set,
 	'C Tower':c_tower_set,
 
-	'2AB':two_ab_set,
+	'23AB':two_ab_set,
 	'34C':three_four_c_set,
 	'4AB':four_ab_set,
 	'5AB':five_ab_set,
@@ -124,7 +124,7 @@ def init():
 	'6AB':six_ab_set,
 	'7ABC':seven_abc_set
 	}
-
+	# print rooms_dictionary
 	return rooms_dictionary
 
 # print rooms_set
@@ -145,19 +145,19 @@ def map_room(room_number):
 		return room_number[0] + correct_section[0]
 	elif('ABC' in correct_section):
 		for index in C_tower_indices:
-			if(index in room_number):
+			if(index in room_number[1:]):
 				return '7C'
 		for index in B_tower_indices:
-			if(index in room_number):
+			if(index in room_number[1:]):
 				return '7B'
 		return '7A'
 	elif('AB' in correct_section):
 		for index in B_tower_indices:
-			if(index in room_number):
+			if(index in room_number[1:]):
 				return room_number[0] + 'B'
 		return room_number[0] + 'A'
 	else:
 		return room_number[0] + 'C'
 
 
-# print(map_room('722B'))
+# print(map_room('673'))
