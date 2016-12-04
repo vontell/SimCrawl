@@ -37,7 +37,7 @@ def event_dump():
 	event_dicts = []
 	for event in events:
 		event_dicts.append(event.get_dict())
-		
+
 	return json.dumps(event_dicts)
 
 @app.route('/api/event',methods=['POST'])
@@ -56,6 +56,13 @@ def create_event():
 	# return json.dumps(events.get_dict())
 	# print "here"
 	return "Added event"
+
+@app.route('/api/count')
+def increment_count():
+	event_id = int(request.args.get('id'))
+	events[event_id].count += 1
+
+	return "Count incremented"
 
 if __name__ == "__main__":
     app.run()
