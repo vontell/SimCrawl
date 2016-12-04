@@ -2,27 +2,40 @@ package com.avontell.simcrawl;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.avontell.simcrawl.domain.Event;
 import com.avontell.simcrawl.domain.EventType;
 import com.avontell.simcrawl.domain.Room;
 import com.avontell.simcrawl.domain.Section;
 
+import org.json.JSONArray;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout eventListView;
     private List<Event> events = new ArrayList<>();
-    private final String url = "http://simcrawl.herokuapp.com/api/rooms"
+    private final String url = "http://simcrawl.herokuapp.com/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +45,24 @@ public class MainActivity extends AppCompatActivity {
         eventListView = (LinearLayout) findViewById(R.id.event_list_view);
 
         refreshEvents();
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.new_item) {
+            createEventDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -96,7 +127,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void showPath(JSONArray array) {
+
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title("Found Best Path")
+                .content(array.toString())
+                .negativeText(R.string.title_cancel)
+                .build();
+
+        dialog.show();
+
+    }
+
     public void openEventDetail(int index) {
+
+        String origin = "574";
+        String destination = "" + events.get(index).getRoom().getNumber();
+        new GetPath().execute(origin, destination);
+
+    }
+
+    public void createEventDialog() {
+
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.create_event_title)
+                .customView(R.layout.create_event_dialog, true)
+                .positiveText(R.string.title_submit)
+                .negativeText(R.string.title_cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                    }
+                })
+                .build();
+
+        dialog.show();
+
+        View dialogView = dialog.getCustomView();
 
 
 
@@ -110,10 +178,14 @@ public class MainActivity extends AppCompatActivity {
 
             events = new ArrayList<>();
 
-            for(int i = 0; i < 20; i++) {
-                Event event1 = new Event("Event 1", "Bob Smithy Smith", EventType.BAR, new Room(329, new Section("3C")), false, "8:00pm", "10:00pm", 10);
-                events.add(event1);
-            }
+            Event event1 = new Event("Aaron's Pset Party", "Aaron Vontell", EventType.PSET, new Room(574, new Section("5C")), false, "8:00pm", "10:00pm", 3);
+            events.add(event1);
+            Event event2 = new Event("Smash Tournament", "Jesus Corona", EventType.SMASH, new Room(321, new Section("Party Room")), false, "6:00pm", "10:30pm", 8);
+            events.add(event2);
+            Event event3 = new Event("Breakfast Club", "Heads of House", EventType.CUSTOM, new Room(100, new Section("Dining")), true, "10:00am", "12:00pm", 15);
+            events.add(event3);
+            Event event4 = new Event("Bar Event (21+)", "Some Student", EventType.BAR, new Room(1077, new Section("10A")), true, "10:00pm", "1:00am", 4);
+            events.add(event4);
 
             return null;
 
@@ -127,12 +199,71 @@ public class MainActivity extends AppCompatActivity {
 
     class GetPath extends AsyncTask<String, Void, Void> {
 
+        JSONArray array = new JSONArray();
+
         @Override
         protected Void doInBackground(String... locations) {
+
+            String URL = url + "search?start=" + locations[0] + "&end=" + locations[1];
+
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(URL)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                String result = response.body().string();
+                Log.e("RESULT", result);
+                array = new JSONArray(result);
+            } catch (Exception exception) {
+                Log.e("EXCEPTION", exception.toString());
+                return null;
+            }
 
             return null;
 
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            showPath(array);
+        }
+
     }
+
+    class PostEvent extends AsyncTask<Event, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Event... events) {
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+        }
+    }
+
+    class IncremementEvent extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Integer... events) {
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+        }
+
+    }
+
+
 
 }

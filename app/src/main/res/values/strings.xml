@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">SimCrawl</string>
+
+    <string name="create_event_title">Create Event</string>
+    <string name="title_hint">Event Title</string>
+    <string name="title_host">Event Host</string>
+    <string name="title_room">Room or Location</string>
+    <string name="title_section">Event Section</string>
+    <string name="title_official">Dorm Event</string>
+    <string name="title_start">Start Time</string>
+    <string name="title_end">End Time</string>
+    <string name="title_type">Event Type</string>
+    <string name="type_pset">Pset Party</string>
+    <string name="type_bar">Bar Crawl (21+)</string>
+    <string name="type_movie">Movie</string>
+    <string name="type_smash">Super Smash Bros.</string>
+    <string name="type_custom">Other</string>
+    <string name="title_submit">Submit</string>
+    <string name="title_cancel">Cancel</string>
+
 </resources>
