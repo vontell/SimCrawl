@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LinearLayout eventListView;
     private List<Event> events = new ArrayList<>();
+    private final String url = "http://simcrawl.herokuapp.com/api/rooms"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
